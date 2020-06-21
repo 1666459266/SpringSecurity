@@ -1,0 +1,9 @@
+com\core\security\springmvc\model\AuthenticationRequest.class
+com\core\security\springmvc\init\SpringApplicationInitializer.class
+com\core\security\springmvc\config\ApplicationConfig.class
+com\core\security\springmvc\service\AuthenticationService.class
+com\core\security\springmvc\config\WebConfig.class
+com\core\security\springmvc\model\UserDto.class
+com\core\security\springmvc\controller\LoginController.class
+com\core\security\springmvc\interceptor\SimpleAuthenticationInterceptor.class
+com\core\security\springmvc\service\serviceimpl\AuthenticationServiceImpl.class

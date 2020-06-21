@@ -1,0 +1,46 @@
+当资源服务和授权服务不在一起时 资源服务使用RemoteTokenServices远程请求授权服务认证token 如果访问量较大将会影响系统性能
+使用JWT令牌 用户认证会得到一个JWT令牌 JWT令牌已经包括了用户相关的信息 客户端只需要携带JWT访问资源服务
+资源服务根据事先约定好的算法自行完成令牌校验 无需每次请求认证服务完成授权
+JWT（Json Web Token）是一个开放的行业标准 它定义了一种简介的 自包含的协议格式 用于在通信双方传递json对象 传递的信息经过数字签名可以被验证和信任
+JWT可以使用HMAC算法或使用RSA的公钥/私钥签名 防止被篡改
+JWT的优点
+    1.JWT基于json 非常方便解析
+    2.可以在令牌中自定义丰富的内容 易扩展
+    3.通过非对称加密算法及数字签名技术 防止JWT被篡改 安全性高
+    4.资源服务使用JWT可不依赖认证服务即可完成授权
+JWT的缺点
+    JWT令牌较长 占存储空间比较大
+
+JWT令牌结构由三部分组成 每部分中间使用.分隔 xxxxx.yyyyy.zzzzz
+    Header 头部包括令牌的类型（即JWT）以及使用的哈希算法（如HMAC SHA256 RSA）使用Base64Url编码得到JWT令牌第二部分
+    Payload 负载 内容是一个json对象 它是存放有效信息的地方 它可以存放JWT提供的字段 iss(过期时间戳) exp(签发者) sub(面向用户)等
+            此部分不建议方敏感信息 因为此部分可以解码还原原始内容 使用Base64Url编码得到JWT令牌第二部分
+    Signature 签名 此部分防止JWT内容被篡改 使用Base64Url对前两部分进行编码 编码后使用.连接组成字符串 最后使用Header中声明的算法签名进行签名
+
+配置JWT令牌服务
+    1.TokenConfig 在security-uaa中配置令牌服务 即可实现生成jwt格式的令牌
+    2.定义令牌服务
+        //令牌增强
+        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(jwtAccessTokenConverter));
+        services.setTokenEnhancer(tokenEnhancerChain);
+校验jwt令牌
+    1.在TokenConfig 在security-order中配置令牌服务 与security-uaa一致
+    2.屏蔽资源服务原来的令牌服务类 注入TokenStore
+
+整体流程
+    UAA认证服务负责认证授权
+    所有请求经过网关到达微服务
+    网关负责鉴权客户端以及请求转发
+    网关将token解析后传给微服务 微服务进行授权
+
+网关整合OAuth2.0有两种思路
+    一种是认证服务器生成的JWT令牌 所有请求统一在网关层验证 判断权限等操作
+    一种是由各个资源服务处理 网关只做请求转发
+我们选择第一种 把API网关作为OAuth2.0的资源服务器角色 实现接入客户端权限拦截 令牌解析并转发到当前登录用户信息给微服务 这样微服务就不需要关心令牌格式解析以及OAuth2.0相关机制
+    API网关主要负责两件事
+        1.作为OAuth2.0资源服务器 实现接入方权限拦截
+        2.令牌解析并转发当前用户信息（明文token）给微服务
+    微服务拿到明文token（明文token中包含登录用户的身份和权限信息）后也要做两件事
+        1.用户授权拦截（看看是否有权访问该资源）
+        2.将用户信息存储进当前线程的上下文（有利于后续业务逻辑随时获取当前用户信息）

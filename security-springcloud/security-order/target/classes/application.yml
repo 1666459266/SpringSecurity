@@ -1,0 +1,12 @@
+server:
+  port: 80
+  servlet:
+    context-path: /security-order
+
+spring:
+  application:
+    name: security-uaa
+
+feign:
+  hystrix:
+    enabled: true

@@ -1,0 +1,34 @@
+认证是为了保护系统的隐私数据 用户身份合法方可访问系统的资源
+用户认证就是判断一个用户身份是否合法的过程 用户去访问系统资源时系统要求验证用户的身份信息 身份合法才可以继续访问 不合法则拒绝访问
+常见的用户身份认证方式：用户名密码登录 二维码登录 手机短信登录 指纹登录等方式
+
+用户认证通过后 为了避免用户每次操作都进行认证可将用户的信息保存在会话中 会话是系统为了保持当前用户的登录状态所提供的的机制
+常见的有基于session方式 基于token方式等
+session 用户认证成功后 在服务端生成用户相关的数据保存在session中发给客户端的session_id存放到cookie中
+            用户客户端请求时带上session_id就可以验证服务器端是否存在session数据 以此完成用户的合法校验
+            当用户退出系统或session过期销毁时 客户端的session_id也就无效了
+token 用户认证成功后 服务端生成一个token 客户端放在Autorization中存储 每次请求时带上token通过验证后即可确认用户身份
+
+认证是为了保证用户身份的合法性 授权是为了更细粒度的对隐私数据进行划分 授权是在认证通过后发生的
+授权是用户认证通过根据用户的权限来控制用户访问资源的过程 拥有资源的访问权限则正常访问 没有权限则拒绝访问
+
+Subject一般指用户
+Resource一般是系统菜单 页面 按钮 代码方法（功能资源web每个功能资源对应一个URL）系统商品信息 系统商品信息（实体/数据资源）
+权限规定了用户对资源的操作许可 权限离开资源没有意义
+用户<多对多>角色<多对多>权限<多对多>资源
+       用户角色        角色权限
+企业开发汇总将资源和权限合并为一张权限表
+
+通常采用RBAC实现授权
+	基于角色的访问控制是按角色进行授权
+	基于资源的访问控制是按资源进行授权（推荐）
+
+基于session的认证机制有Servlet规范定制 Servlet容器已实现 用户通过HttpSession的操作方法即可实现
+HttpSession getSession(Boolean create) 获取当前HttpSession对象
+void setAttribute(String name,Object value) 向session中存放对象
+object getAttribute(String name) 从session中获取对象
+void removeAttribute(String name) 移除session中的对象
+void invalidate() 使HttpSession失效
+
+Session认证是一种常见的认证方式 至今还有很多系统在用
+正式的生产项目中 我们往往会考虑使用第三方安全框架来实现认证授权功能

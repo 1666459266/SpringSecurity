@@ -1,0 +1,16 @@
+0:0:0:0:0:0:0:1 - - [16/Jun/2020:15:46:51 +0800] "GET /security-spring-security HTTP/1.1" 302 - http-bio-8080-exec-1 0
+0:0:0:0:0:0:0:1 - - [16/Jun/2020:15:46:51 +0800] "GET /security-spring-security/ HTTP/1.1" 302 - http-bio-8080-exec-3 37
+0:0:0:0:0:0:0:1 - - [16/Jun/2020:15:46:51 +0800] "GET /security-spring-security/login HTTP/1.1" 200 1431 http-bio-8080-exec-4 6
+0:0:0:0:0:0:0:1 - - [16/Jun/2020:15:46:58 +0800] "POST /security-spring-security/login HTTP/1.1" 200 12 http-bio-8080-exec-5 38
+0:0:0:0:0:0:0:1 - - [16/Jun/2020:15:47:04 +0800] "GET /security-spring-security/test/1 HTTP/1.1" 200 5 http-bio-8080-exec-6 3
+0:0:0:0:0:0:0:1 - - [16/Jun/2020:15:47:08 +0800] "GET /security-spring-security/test/2 HTTP/1.1" 403 979 http-bio-8080-exec-8 3
+0:0:0:0:0:0:0:1 - - [16/Jun/2020:15:49:00 +0800] "GET /security-spring-security/test/1 HTTP/1.1" 200 5 http-bio-8080-exec-10 3
+0:0:0:0:0:0:0:1 - - [16/Jun/2020:15:49:07 +0800] "GET /security-spring-security/logout HTTP/1.1" 200 1040 http-bio-8080-exec-10 1
+0:0:0:0:0:0:0:1 - - [16/Jun/2020:15:49:10 +0800] "POST /security-spring-security/logout HTTP/1.1" 302 - http-bio-8080-exec-10 2
+0:0:0:0:0:0:0:1 - - [16/Jun/2020:15:49:10 +0800] "GET /security-spring-security/login?logout HTTP/1.1" 200 1507 http-bio-8080-exec-10 1
+0:0:0:0:0:0:0:1 - - [16/Jun/2020:15:50:01 +0800] "POST /security-spring-security/login HTTP/1.1" 302 - http-bio-8080-exec-10 7
+0:0:0:0:0:0:0:1 - - [16/Jun/2020:15:50:01 +0800] "GET /security-spring-security/login?error HTTP/1.1" 200 1506 http-bio-8080-exec-10 3
+0:0:0:0:0:0:0:1 - - [16/Jun/2020:15:50:16 +0800] "POST /security-spring-security/login HTTP/1.1" 200 12 http-bio-8080-exec-10 4
+0:0:0:0:0:0:0:1 - - [16/Jun/2020:15:50:21 +0800] "GET /security-spring-security/test/1 HTTP/1.1" 403 979 http-bio-8080-exec-10 1
+0:0:0:0:0:0:0:1 - - [16/Jun/2020:15:50:24 +0800] "GET /security-spring-security/test/2 HTTP/1.1" 200 5 http-bio-8080-exec-10 2
+0:0:0:0:0:0:0:1 - - [16/Jun/2020:15:50:25 +0800] "GET /security-spring-security/test/2 HTTP/1.1" 200 5 http-bio-8080-exec-10 2

@@ -1,0 +1,121 @@
+工作原理
+结构总览
+    SpringSecurity解决的问题就是安全访问控制 而安全访问控制功能其实就是对所有进入系统的请求进行拦截 校验每个请求是否能够访问它所期望的资源
+    可以通过Filter或AOP技术来实现 SpringSecurity对Web资源的保护是靠Filter实现的
+    当初始化SpringSecurity时 会创建一个名为SpringSecurityFilterChain的Servlet过滤器 类型为org.springframework.security.web.FilterChainProxy
+    它实现了javax.servlet.Filter 因此外部的请求会经过此类 通过Filter链拦截用户请求
+    FilterChainProxy是一个代理 真正起作用的是FilterChainProxy中SpringFilterChain所包含的各个Filter 这些Filter作为Bean被Spring管理 是SpringSecurity的核心 各司其职
+    但他们并不直接处理用户认证 也不直接处理用户授权 而是交给认证管理器AuthenticationManager和决策管理器AccessDecisionManager进行处理
+    主要的过滤器及其作用：
+        SecurityContextPersistenceFilter这个Filter是整个拦截过程的入口和出口（也就是第一个拦截器和最后一个拦截器）
+        会在请求开始时配置好SecurityContextRepository中获取SecurityContext 然后把它设置给SecurityContextHolder
+        在请求完成后SecurityContextHolder持有的SecurityContext再保存到配置好的SecurityContextRepository 同时清除SecurityContextHolder所持有的SecurityContext
+
+        UsernamePasswordAuthenticationFilter用于处理来自表单提交的认证 该表单必须提供对应的用户名和密码
+        其内部还有登录成功和失败后进行处理的AuthenticationSuccessHandler和AuthenticationFailureHandler
+
+        FilterSecurityInterceptor用于保护web资源的 使用AccessDecisionManager对当前用户进行授权访问
+
+        ExceptionTranslationFilter能捕获来自FilterChain所有的异常并进行处理 只会处理两种异常 AuthenticationException和AccessDecisionException 其他异常会继续抛出
+
+认证流程
+    1.用户提交用户名和密码 UsernamePasswordAuthenticationFilter
+    2.将请求信息封装为Authentication 实现类为UsernamePasswordAuthenticationToken
+    3.交由认证器AuthenticationManager 认证authenticate()
+    4.由AuthenticationManager交给DaoAuthenticationProvider真正进行用户认证 委托认证authenticate()
+    5.获取用户信息 调用UserDetailsService loadUserByUsername()
+    6.返回UserDetails
+    7.通过PasswordEncoder调用SecurityContextHolder 对比UserDetails中的密码与Authentication中的密码是否一致
+    8.填充Authentication 如权限信息
+    9.返回Authentication
+    10.通过SecurityContextHolder.getContext().setAuthentication()方法将Authentication保存至安全上下文
+
+AuthenticationProvider（认证管理器AuthenticationManager委托AuthenticationProvider完成认证工作）
+    AuthenticationProvider是一个接口 authenticate()方法定义了认证的实现过程
+    参数是Authentication 里面包含了登录用户所提交的用户密码等 返回类型也是Authentication 认证成功之后将用户权限及其他信息重新组装后生成
+    每个AuthenticationProvider需要实现supports()方法来表明自己支持的认证方式 在AuthenticationProvider的基类AbstractUserDetailsAuthenticationProvider中
+    当web表单提交用户名密码时 由DaoAuthenticationProvider处理
+UserDetailsService
+    DaoAuthenticationProvider处理了web表单的认证逻辑 认证成功后得到一个Authentication（UsernamePasswordAuthenticationToken实现）
+    里面包含了Principal为Object类型 大多数情况下可以强制转为UserDetails
+    DaoAuthenticationProvider包含了一个UserDetailsService实例 负责提取用户信息UserDetails
+    DaoAuthenticationProvider会去对比UserDetailsService提取的密码与用户提交的密码是否匹配作为成功的关键依据
+    因此可以将自定义的UserDetailsService公开为Spring Bean来定义自定义身份验证
+    UserDetailsService只是从特定的地方加载用户信息 DaoAuthenticationProvider完成整个认证流程 同时把UserDetails填充至Authentication
+PasswordEncoder提供了很多内置的PasswordEncoder能够开箱即用 使用某种PasswordEncoder只需要进行声明即可
+    NoOpPasswordProvider采用字符串匹配方法 不对密码进行加密比较处理
+    实际项目推荐使用BCryptPasswordEncoder Pbkdf2PasswordEncoder SCryptPasswordEncoder等
+    提供了BCrypt进行加密 每次加密的结果不同但可以通过校验
+    由于已经设置了密码编码器 会根据设置的密码编码器比较用户输入的密码和数据库中存储的密码
+
+授权流程（SpringSecurity可以通过http.authorizeRequests对Web请求进行授权保护 SpringSecurity使用标准Filter建立了对Web请求的拦截 最终实现对资源的授权访问）
+    1.认证后的用户访问受保护资源 经过FilterSecurityInterceptor过滤器
+    2.获取访问当前资源所需要的权限 SecurityMetadataSource.getAttributes() 同时获取用户所具有的权限
+    3.返回Collection<ConfigAttribute>
+    4.授权决策AccessDecisionManager.Decide() 对比的过程交给AccessDecisionManager完成
+    5.授权管理器通过投票决策 匹配用户所拥有的权限和资源所要求的权限
+    6.通过决策
+    7.允许访问资源 请求放行
+
+AccessDecisionManager（访问决策管理器）
+    AccessDecisionManager是一个接口 decide()通过传递的参数来决定是否有访问对应受保护资源的权限
+    decide()参数：
+        authentication：要访问资源的访问者身份
+        object：要访问的受保护资源 Web请求对应的FilterInvocation
+        configAttributes：是受保护资源的访问策略 通过SecurityMetadataSource获取
+    SpringSecurity内置了三个基于投票的AccessDecisionManager实现类
+        AffirmativeBased(默认使用AffirmativeBased)
+            1.只要有AccessDecisionVoter投票为ACCESS_GRANTED则同意用户进行访问
+            2.如果全部弃权也表示通过
+            3.如果没有一个人投赞成票 但有人投反对票 将抛出AccessDeniedException
+        ConsensusBased
+            1.如果赞成票多于反对票则表示通过
+            2.如果反对票多于赞成票将抛出AccessDeniedException
+            3.如果赞成票和反对票相同且不等于0 并且allowlfEqualGrantedDeniedDecisions的值为true（默认为true） 则表示通过否则将抛出AccessDeniedException
+            4.如果所有的AccessDecisionVoter都弃权了 则将视allowlfAllAbstainDecisions而定（默认为false） 如果为true则通过 否则将抛出AccessDeniedException
+        UnanimousBased
+            1.如果受保护对象配置的某一个ConfigAttribute被任意AccessDecisionVoter反对 将抛出AccessDeniedException
+            2.如果没有反对票 但有赞成票 则表示通过
+            3.如果全部弃权 则将视allowlfAllAbstainDecisions而定 如果为true则通过 否则将抛出AccessDeniedException
+
+SpringSecurity为了防止CSRF（跨站请求伪造）的发生 限制了除get以外的大多数请求方法
+需要在安全拦截机制中配置不拦截post请求
+
+用户通过认证后 为了避免用户的每次操作都进行认证可将用户的信息保存在会话中
+SpringSecurity提供会话管理 认证通过将用户信息存入SecurityContextHolder
+SecurityContext与当前线程进行绑定 方便获取用户身份
+会话控制
+    always 如果没有session存在就创建一个
+    ifRequired 如果需要就创建一个Session（默认）
+    never SpringSecurity不会创建session 但如果应用中其他地方创建了session 那么SpringSecurity将会使用它
+    stateless SpringSecurity不会创建session 也不使用session
+需要在安全拦截机制中配置sessionManagement()
+使用stateless SpringSecurity对登录成功的用户不会创建session 应用程序也不允许新建session 并且不会使用cookie
+每个请求都需要重新进行身份验证 这种无状态的架构适用于REST API及无状态认证机制（分布式系统）
+会话超时
+    server.servlet.session.timeout=3600s session超时后可以通过sessionManagement()设置跳转路径
+    expiredUrl()指session过期 invalidSessionUrl()指传入的sessionId无效
+会话安全
+    server.servlet.session.cookie.http-only=true 浏览器将无法发送cookie
+    server.servlet.session.cookie.secure=true cookie将仅通过HTTPS连接发送
+
+自定义登录
+    .loginPage("/login_view")//自定义登录页面
+    .loginProcessingUrl("/login")//自定义登录地址
+自定义退出
+    .logout()
+    .logoutUrl("/logout")//自定义的退出URL
+    .logoutSuccessUrl("/login_view?logout")//自定义跳转地址
+logoutSuccessHandler 实现用户退出成功时的处理（如果指定了这个选项 logoutSuccessUrl设置将会被忽略）
+logoutHandler用于实现用户退出的清理工作
+invalidateHttpSession设为true 指定退出时让HttpSession无效
+
+授权方式包括web授权和方法授权 web授权是通过对url拦截进行授权 方法授权是通过方法拦截进行授权
+web授权：通过http.authorizeRequests()添加多个子节点来定制需求到我们的URL 校验规则从上到下
+方法授权
+    @PreAuthorize 需要在任何一个@Configuration添加@EnableGlobalMethodSecurity注解来启用基于注解的安全性 基于AOP思想在方法之前拦截
+    @PostAuthorize 基于AOP思想在方法之后拦截
+    @Secured 需要在任何一个@Configuration添加@EnableGlobalMethodSecurity(securedEnabled = true)注解来启用基于注解的安全性
+        @Secured("IS_AUTHENTICATED_ANONYMOUSLY")标注的方法不需要登录 匿名就可以访问
+        @Secured("ROLE_TELLER")标注的方法具备TELLER角色才能访问
+配置方法授权之后 可以注释基于URL的web授权

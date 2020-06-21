@@ -1,0 +1,17 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /security-uaa
+
+spring:
+  application:
+    name: security-uaa
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/spring_security?characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true
+    username: root
+    password: 123456
+
+feign:
+  hystrix:
+    enabled: true

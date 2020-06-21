@@ -1,0 +1,81 @@
+OAuth2.0介绍
+OAuth是一个开放标准 允许用户授权第三方应用访问用户存储在另外的服务提供者上的信息 而不需要将用户名和密码提供给第三方应用
+OAuth2.0是OAuth协议的延续版本 但不向后兼容1.0 很多大型公司都提供了OAuth认证服务 足以说明Oauth标准逐渐成为开放资源授权的标准
+网站第三方登录需要从第三方获取用户信息则用户认证成功 第三方需要经过用户同意才能生成令牌  网站使用该令牌从第三方中获取用户信息
+服务提供商会给准入的接入方一个身份 用于接入时的凭据 client_id客户端标识 client_secret客户端密钥
+OAuth包含两个服务 授权服务和资源服务
+	授权服务应包含对接入端以及登入用户的合法性进行验证并颁发token
+		AuthorizationEndpoint服务于认证请求 默认URL/oauth/authorize
+		TokenEndpoint服务于访问令牌请求 默认/oauth/token
+	资源服务应包含对资源的保护功能 对非法请求进行拦截 对请求中token进行解析鉴权
+		OAuth2AuthenticationProcessingFilter用来对请求给出的身份令牌解析鉴权
+
+授权服务配置
+    使用@EnableAuthorizationServer注解到一个Configuration配置类上并继承AuthorizationServerConfigureAdapter来配置OAuth2.0授权服务器
+    需要配置以下三个类 这三个类是由Spring创建的独立的配置对象 它们会被传入AuthorizationServerConfigurer
+    ClientDetailsServiceConfigurer 用来配置客户端详细服务 客户端详细信息在这里初始化（可以写死或从数据库中调用）
+    AuthorizationServerEndpointsConfigurer 用来配置令牌（token）的访问端点和令牌服务（token services）
+    AuthorizationServerSecurityConfigurer 用来配置令牌端点的安全约束
+
+    配置客户端详细信息
+        ClientDetailsServiceConfigurer有两种存储方式
+            inMemory() 内存方式
+            jdbc() 持久化方式
+        配置客户端详细信息
+            clientId 用来表示客户id（必须的）
+            secret 客户端安全码（需要值得信赖的客户端）
+            scope 用来限制客户端的访问范围 如果为空则拥有全部的访问范围
+            authorizedGrantTypes 可以使用的授权类型 默认为空
+            authorities 此客户端可以使用的权限
+    令牌访问端点配置 AuthorizationServerEndpointsConfigurer对象实例可以完成令牌服务以及令牌endpoint配置
+        配置授权类型
+            AuthorizationServerEndpointsConfigurer通过设定以下属性决定支持授权类型
+            AuthenticationManager资源所有者密码授权类型 当选择资源所有者密码授权类型时需要设置一个属性值注入AuthenticationManager对象
+            UserDetailsService设置了这个属性表明自己有一个UserDetailsService接口的实现 设置到全局域上刷新令牌授权模式的流程就会包含一个检查 确保这个账号是否仍然有效
+            AuthorizationCodeServices设置授权码服务 主要用于authorization_code授权码类型模式
+            implicitGrantService 用于设置隐私授权模式 用来实现隐式授权模式的状态
+            tokenGranter 设置该属性后 授权将由自己完全控制
+        配置授权端点URL
+            AuthorizationServerEndpointsConfigurer对象有一个pathMapping()方法来配置端点URL链接
+            有两个参数 第一个是String 端点的URL默认链接 第二个是String 需要代替的URL链接
+            /oauth/authorize 授权端点
+            /oauth/token 令牌端点
+            /oauth/confirm_access 用户确认授权提交端点
+            /oauth/error 授权服务错误信息端点
+            /oauth/check_token 用于资源服务访问的令牌解析端点
+            /oauth/token_key 授权公有密钥的端点 如果使用JWT令牌的话
+        授权端点的URL应该被SpringSecurity保护起来只供授权用户访问
+    令牌端点的安全约束
+        AuthorizationServerSecurityConfigurer用来配置令牌端点的安全约束
+授权服务配置总结
+    既然要完成认证 首先要得知客户端信息从哪读取 因此要进行客户端配置
+    既然要颁发token 那必须定义token相关的endpoint以及token如何存取 以及客户端支持哪些类型的token
+    既然暴露除了一些endpoint 那对这些endpoint可以定义一些安全上的约束
+
+OAuth2.0提供了四种模式
+授权码模式（最安全的一种模式 一般用于client是web服务器应用或第三方原生App调用资源服务时 这种模式的access_token不会经过浏览器或App 直接与服务端交换）
+    获取授权码localhost:8080/security-uaa/oauth/authorize?client_id=c1&response_type=code&scope=all&redirect_uri=http://www.baidu.com
+    申请令牌localhost:8080/security-uaa/oauth/token?client_id=c1&client_secret=secret&grant_type=authorization_code&code=SZSmrG&redirect_uri=http://www.baidu.com
+    得到的令牌 access_token访问资源的令牌 refresh_token刷新令牌（当访问资源令牌无效时可以重新在申请一个令牌）
+简化模式（response_type是token表明是简化模式 用于没有服务器端的第三方单页面应用）
+    获取授权码localhost:8080/security-uaa/oauth/authorize?client_id=c1&response_type=token&scope=all&redirect_uri=http://www.baidu.com
+    得到的令牌 access_token访问资源的令牌
+密码模式（这种模式十分简单 意味着将用户敏感信息泄露给client 因此密码模式一般只用于自己开发）
+    请求令牌localhost:8080/security-uaa/oauth/token?client_id=c1&client_secret=secret&grant_type=password&username=zhangsan&password=123
+客户端模式（最简单的模式但最不安全 因此client要求我们对client完全的信任 client本身也是安全的）
+    请求令牌localhost:8080/security-uaa/oauth/token?client_id=c1&client_secret=secret&grant_type=client_credentials
+
+资源服务配置
+    使用@EnableResourceServer注解到一个Configuration配置类上并继承ResourceServerConfigurerAdapter来配置资源服务
+    ResourceServerConfigurer主要包括
+        tokenServices ResourceServerTokenServices类的实例 用来实现令牌服务
+        tokenStore TokenStore类的实例 指定令牌如何访问 与tokenServices配置可选
+        resourceId 这个资源服务的ID 这个属性是可选的 推荐设置并在授权服务中进行认证
+    验证token
+        如果授权服务和资源服务在同一个应用程序 可以使用DefaultTokenServices
+        如果资源服务器是分开的 就必须确保匹配有授权服务提供的ResourceServerTokenServices 它知道如何对令牌进行解码
+        令牌解析方法
+            使用DefaultTokenServices在资源服务器本地配令牌存储 解码 解析方式
+            使用RemoteTokenServices资源服务器通过HTTP请求来解码令牌 每次都请求授权服务器端点/oauth/check_token
+        请求时在请求头带上Authorization 值为Bearer token
+        如果需要控制权限 必须要添加安全访问控制

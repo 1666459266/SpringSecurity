@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="e455d8fa-428f-4ef6-8048-a439fa1c3438" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="localRepository" value="D:\maven\.m2\repository" />
+        <option name="mavenHome" value="D:/apache-maven-3.5.4" />
+        <option name="userSettingsFile" value="D:\maven\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+        <option name="vmOptionsForImporter" value="-Xmx768m" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1dU2Z8U9J8zydB3d1COhGzXjtQV" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="jdk.selected.JAVA_MODULE" value="1.8" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="Errors" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.core.config" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\IntelliJ IDEA 2019.3\Intellij IDEA\Spring Security\security-springcloud-jwt\security-gateway\src\main\java\com\core\config" />
+      <recent name="D:\IntelliJ IDEA 2019.3\Intellij IDEA\Spring Security\security-springcloud-jwt\security-order\src\main\java" />
+      <recent name="D:\IntelliJ IDEA 2019.3\Intellij IDEA\Spring Security\security-springcloud-jwt\security-uaa\src\main\java" />
+      <recent name="D:\IntelliJ IDEA 2019.3\Intellij IDEA\Spring Security\security-springcloud-jwt\security-order\src\main\resources" />
+      <recent name="D:\IntelliJ IDEA 2019.3\Intellij IDEA\Spring Security\security-springcloud-jwt\security-uaa\src\main\resources" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.SecurityEureka7001">
+    <configuration name="SecurityEureka7001" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="security-eureka" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.core.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.core.SecurityEureka7001" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SecurityGateway9527" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="security-gateway" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.core.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.core.SecurityGateway9527" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SecurityOrderApplication80" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="security-order" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.core.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.core.SecurityOrderApplication80" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SecurityUaaApplication8080" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="security-uaa" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.core.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.core.SecurityUaaApplication8080" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Spring Boot.SecurityEureka7001" />
+      <item itemvalue="Spring Boot.SecurityUaaApplication8080" />
+      <item itemvalue="Spring Boot.SecurityOrderApplication80" />
+      <item itemvalue="Spring Boot.SecurityGateway9527" />
+    </list>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <option name="contentProportion" value="0.3008658" />
+          <treeState>
+            <expand>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="Spring Boot" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              </path>
+            </expand>
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e455d8fa-428f-4ef6-8048-a439fa1c3438" name="Default Changelist" comment="" />
+      <created>1592465403323</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1592465403323</updated>
+      <workItem from="1592465404520" duration="3566000" />
+      <workItem from="1592469013751" duration="67000" />
+      <workItem from="1592469173298" duration="456000" />
+      <workItem from="1592469631308" duration="313000" />
+      <workItem from="1592469949306" duration="904000" />
+      <workItem from="1592471407252" duration="1640000" />
+      <workItem from="1592476284114" duration="5066000" />
+      <workItem from="1592483365728" duration="3000" />
+      <workItem from="1592483371600" duration="1776000" />
+      <workItem from="1592487575903" duration="147000" />
+      <workItem from="1592487725085" duration="794000" />
+      <workItem from="1592528679983" duration="4707000" />
+      <workItem from="1592533396026" duration="583000" />
+      <workItem from="1592533981282" duration="402000" />
+      <workItem from="1592534385994" duration="1020000" />
+      <workItem from="1592535457190" duration="4865000" />
+      <workItem from="1592542582454" duration="612000" />
+      <workItem from="1592543630387" duration="24000" />
+      <workItem from="1592544091289" duration="91000" />
+      <workItem from="1592545325914" duration="186000" />
+      <workItem from="1592545522206" duration="24000" />
+      <workItem from="1592553928126" duration="182000" />
+      <workItem from="1592555519768" duration="1209000" />
+      <workItem from="1592556753029" duration="43000" />
+      <workItem from="1592556967426" duration="17000" />
+      <workItem from="1592557342622" duration="480000" />
+      <workItem from="1592558280293" duration="313000" />
+      <workItem from="1592633152761" duration="233000" />
+      <workItem from="1592633402271" duration="118000" />
+      <workItem from="1592633532765" duration="1712000" />
+      <workItem from="1592636687761" duration="269000" />
+      <workItem from="1592647321613" duration="9319000" />
+      <workItem from="1592657705674" duration="1865000" />
+      <workItem from="1592659672750" duration="191000" />
+      <workItem from="1592700318404" duration="3222000" />
+      <workItem from="1592704291404" duration="1385000" />
+      <workItem from="1592708903103" duration="9000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="552" y="178" key="#Project_Structure" timestamp="1592488006929">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="178" key="#Project_Structure/0.0.1920.1040@0.0.1920.1040" timestamp="1592488006929" />
+    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1592556614735">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1592556614735" />
+    <state x="691" y="322" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1592488365266">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="691" y="322" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1592488365266" />
+    <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser" timestamp="1592652828782">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1592652828782" />
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1592633996076">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1592633996076" />
+    <state width="1291" height="282" key="GridCell.Tab.0.bottom" timestamp="1592659863512">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1291" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1592659863512" />
+    <state width="1291" height="282" key="GridCell.Tab.0.center" timestamp="1592659863512">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1291" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1592659863512" />
+    <state width="1291" height="282" key="GridCell.Tab.0.left" timestamp="1592659863512">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1291" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1592659863512" />
+    <state width="1291" height="282" key="GridCell.Tab.0.right" timestamp="1592659863512">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1291" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1592659863512" />
+    <state width="1291" height="282" key="GridCell.Tab.1.bottom" timestamp="1592659863513">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1291" height="282" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1592659863513" />
+    <state width="1291" height="282" key="GridCell.Tab.1.center" timestamp="1592659863512">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1291" height="282" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1592659863512" />
+    <state width="1291" height="282" key="GridCell.Tab.1.left" timestamp="1592659863512">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1291" height="282" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1592659863512" />
+    <state width="1291" height="282" key="GridCell.Tab.1.right" timestamp="1592659863513">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1291" height="282" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1592659863513" />
+    <state width="1291" height="282" key="GridCell.Tab.2.bottom" timestamp="1592659863513">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1291" height="282" key="GridCell.Tab.2.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1592659863513" />
+    <state width="1291" height="282" key="GridCell.Tab.2.center" timestamp="1592659863513">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1291" height="282" key="GridCell.Tab.2.center/0.0.1920.1040@0.0.1920.1040" timestamp="1592659863513" />
+    <state width="1291" height="282" key="GridCell.Tab.2.left" timestamp="1592659863513">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1291" height="282" key="GridCell.Tab.2.left/0.0.1920.1040@0.0.1920.1040" timestamp="1592659863513" />
+    <state width="1291" height="282" key="GridCell.Tab.2.right" timestamp="1592659863513">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1291" height="282" key="GridCell.Tab.2.right/0.0.1920.1040@0.0.1920.1040" timestamp="1592659863513" />
+    <state x="461" y="162" key="SettingsEditor" timestamp="1592466479029">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="461" y="162" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1592466479029" />
+    <state x="504" y="256" width="897" height="606" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1592659537709">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="504" y="256" width="897" height="606" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1920.1040@0.0.1920.1040" timestamp="1592659537709" />
+    <state x="334" y="184" key="new project wizard" timestamp="1592488061470">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="334" y="184" key="new project wizard/0.0.1920.1040@0.0.1920.1040" timestamp="1592488061470" />
+    <state x="616" y="240" key="run.anything.popup" timestamp="1592528943357">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1592528943357" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1592478181089">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1592478181089" />
+  </component>
+</project>

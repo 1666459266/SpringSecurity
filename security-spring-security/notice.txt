@@ -1,0 +1,10 @@
+Spring Security是一个能够为基于Spring的企业应用系统提供声明式的安全访问控制解决方案的安全框架
+由于它是Spring生态系统的一员 因此它伴随整个Spring生态系统不断修正升级 在SpringBoot中加入SpringSecurity更是十分简单
+使用SpringSecurity减少了为企业系统安全控制编写大量重复代码的工作
+
+Spring Security已经提供了认证授权拦截的功能 不需要自定义拦截器 同时默认提供认证页面 不需要额外开发
+Spring Security提供了用户名密码登录 退出 会话管理等认证功能 只需要配置即可使用 在Config包下定义WebSecurityConfig（包括用户信息 密码编码器 安全拦截机制）
+Spring Security初始化
+    如果没有使用Spring或SpringMVC 需要将WebSecurityConfig传入超类 确保获取配置并创建SpringContext
+    如果已经使用Spring 我们在现有的SpringContext中注册SpringSecurity 此方法可以什么都不做
+WebConfig中添加默认请求根路径跳转到/login 此url为SpringSecurity提供（默认提供的登录页面）默认退出登录/logout
